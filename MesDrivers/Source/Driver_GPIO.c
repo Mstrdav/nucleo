@@ -1,41 +1,87 @@
-#ifndef MYGPIO_H
-#define MYGPIO_H
-#include "stm32f10x.h"
+#include "Driver_GPIO.h"
 
-typedef struct
+void MyGPIO_Init(GPIO_TypeDef *GPIO, char GPIO_Pin, char GPIO_Conf)
 {
-	GPIO_TypeDef*GPIO;
-	char GPIO_Pin;
-	char GPIO_Conf;
-} MyGPIO_Struct_TypeDef;
+    // enable the clock oof the concerned GPIO
+    if (GPIO == GPIOA)
+    {
+        RCC->APB2ENR |= RCC_APB2ENR_IOPAEN;
+    }
+    else if (GPIO == GPIOB)
+    {
+        RCC->APB2ENR |= RCC_APB2ENR_IOPBEN;
+    }
+    else if (GPIO == GPIOC)
+    {
+        RCC->APB2ENR |= RCC_APB2ENR_IOPCEN;
+    }
+    else if (GPIO == GPIOD)
+    {
+        RCC->APB2ENR |= RCC_APB2ENR_IOPDEN;
+    }
+    else if (GPIO == GPIOE)
+    {
+        RCC->APB2ENR |= RCC_APB2ENR_IOPEEN;
+    }
 
-//need to write ODR register to choose PullUp or PullDown
-//Set bit corresponding to GPIO Pin on ODR register to 1 for PullUp, 0 for PullDown
-//method setting ODR bit not yet written
-#define In_Floating 0x1
-#define In_PullDown 0x2
-#define In_PullUp 0x2
-#define In_Analog 0x0
-#define Out_Ppull 0x8
-#define Out_OD 0x9
-#define AltOut_Ppull 0xA
-#define AltOut_OD 0xB
-
-
-void MyGPIO_Init( MyGPIO_Struct_TypeDef * GPIOStructPtr);
-int MyGPIO_Read(GPIO_TypeDef * GPIO, char GPIO_Pin);
-void MyGPIO_Set(GPIO_TypeDef * GPIO, char GPIO_Pin);
-void MyGPIO_Reset(GPIO_TypeDef * GPIO, char GPIO_Pin);
-void MyGPIO_Toggle(GPIO_TypeDef * GPIO, char GPIO_Pin);
-
-//enable the clocks of GPIO A
-void MyGPIO_Activate_Clock_A(){
-	RCC->APB2ENR |= RCC_APB2ENR_IOPAEN;
+    // set the mode of the GPIO pin
+    if (GPIO_Pin < 8)
+    {
+        GPIO->CRL &= ~(0xF << GPIO_Pin * 4);
+        GPIO->CRL |= GPIO_Conf << GPIO_Pin * 4;
+    }
+    else
+    {
+        GPIO->CRH &= ~(0xF << (GPIO_Pin % 8) * 4);
+        GPIO->CRH |= GPIO_Conf << (GPIO_Pin % 8) * 4;
+    }
 }
-//enable the clocks of GPIO C
-void MyGPIO_Activate_Clock_C(){
-	RCC->APB2ENR |= RCC_APB2ENR_IOPCEN;
+
+int MyGPIO_Read(GPIO_TypeDef *GPIO, char GPIO_Pin)
+{
+    // read the value of the GPIO pin
+    return (GPIO->IDR & (0x01 << GPIO_Pin));
 }
 
-#endif
-	
+void MyGPIO_Set(GPIO_TypeDef *GPIO, char GPIO_Pin)
+{
+    // set the GPIO pin
+    if (GPIO_Pin < 8)
+    {
+        GPIO->ODR |= (0x01 << GPIO_Pin);
+    }
+    else
+    {
+        GPIO->ODR |= (0x01 << (GPIO_Pin % 8));
+    }
+}
+
+void MyGPIO_Reset(GPIO_TypeDef *GPIO, char GPIO_Pin)
+{
+    // reset the GPIO pin
+    if (GPIO_Pin < 8)
+    {
+        // clear the bit
+        GPIO->ODR &= ~(0x01 << GPIO_Pin);
+    }
+    else
+    {
+        // clear the bit
+        GPIO->ODR &= ~(0x01 << (GPIO_Pin % 8));
+    }
+}
+
+void MyGPIO_Toggle(GPIO_TypeDef *GPIO, char GPIO_Pin)
+{
+    // toggle the GPIO pin
+    if (GPIO_Pin < 8)
+    {
+        // toggle the bit
+        GPIO->ODR ^= (0x01 << GPIO_Pin);
+    }
+    else
+    {
+        // toggle the bit
+        GPIO->ODR ^= (0x01 << (GPIO_Pin % 8));
+    }
+}
