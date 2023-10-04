@@ -45,5 +45,12 @@ void MyTimer_ActiveIT(TIM_TypeDef *Timer, char Prio)
     } else {
         return;
     }
-    Timer->DIER |= TIM_DIER_UIE;
+    Timer->DIER |= TIM_DIER_UIE; // Enable the interrupt
+}
+
+void TIM2_IRQHandler(void)
+{
+    TIM2->SR &= ~TIM_SR_UIF; // Clear the interrupt flag
+    // Toggle the LED
+    GPIOC->ODR ^= GPIO_ODR_ODR13;
 }
