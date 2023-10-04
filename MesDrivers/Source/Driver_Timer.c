@@ -5,7 +5,7 @@ void MyTimer_Base_Init(TIM_TypeDef *Timer, unsigned short ARR, unsigned short PS
     // Enable the clock for the timer
     if (Timer == TIM1)
     {
-        RCC->APB1ENR |= RCC_APB1ENR_TIM1EN;
+        // RCC->APB1ENR |= RCC_APB1ENR_;
     } else if (Timer == TIM2)
     {
         RCC->APB1ENR |= RCC_APB1ENR_TIM2EN;
@@ -52,5 +52,5 @@ void TIM2_IRQHandler(void)
 {
     TIM2->SR &= ~TIM_SR_UIF; // Clear the interrupt flag
     // Toggle the LED
-    GPIOC->ODR ^= GPIO_ODR_ODR13;
+    GPIOA->ODR ^= GPIO_ODR_ODR5;
 }
