@@ -45,5 +45,5 @@ void MyTimer_ActiveIT(TIM_TypeDef *Timer, char Prio)
     } else {
         return;
     }
-    Timer->DIER |= TIM_DIER_UIE;
+    Timer->DIER |= TIM_DIER_UIE; // Enable the interrupt
 }
