@@ -23,6 +23,15 @@ void MyGPIO_Init(GPIO_TypeDef *GPIO, char GPIO_Pin, char GPIO_Conf)
     {
         RCC->APB2ENR |= RCC_APB2ENR_IOPEEN;
     }
+		
+		//specification pull up pull down
+		if (GPIO_Conf == In_PullDown) {
+			MyGPIO_Reset(GPIO, GPIO_Pin);
+		}
+		if (GPIO_Conf == In_PullUp) {
+			GPIO_Conf = In_PullDown;
+			MyGPIO_Set(GPIO, GPIO_Pin);
+		}
 
     // set the mode of the GPIO pin
     if (GPIO_Pin < 8)
@@ -46,42 +55,17 @@ int MyGPIO_Read(GPIO_TypeDef *GPIO, char GPIO_Pin)
 void MyGPIO_Set(GPIO_TypeDef *GPIO, char GPIO_Pin)
 {
     // set the GPIO pin
-    if (GPIO_Pin < 8)
-    {
-        GPIO->ODR |= (0x01 << GPIO_Pin);
-    }
-    else
-    {
-        GPIO->ODR |= (0x01 << (GPIO_Pin % 8));
-    }
+	GPIO->ODR |= (0x01 << GPIO_Pin);
 }
 
 void MyGPIO_Reset(GPIO_TypeDef *GPIO, char GPIO_Pin)
 {
     // reset the GPIO pin
-    if (GPIO_Pin < 8)
-    {
-        // clear the bit
-        GPIO->ODR &= ~(0x01 << GPIO_Pin);
-    }
-    else
-    {
-        // clear the bit
-        GPIO->ODR &= ~(0x01 << (GPIO_Pin % 8));
-    }
+	GPIO->ODR &= ~(0x01 << GPIO_Pin);
 }
 
 void MyGPIO_Toggle(GPIO_TypeDef *GPIO, char GPIO_Pin)
 {
     // toggle the GPIO pin
-    if (GPIO_Pin < 8)
-    {
-        // toggle the bit
-        GPIO->ODR ^= (0x01 << GPIO_Pin);
-    }
-    else
-    {
-        // toggle the bit
-        GPIO->ODR ^= (0x01 << (GPIO_Pin % 8));
-    }
+	GPIO->ODR ^= (0x01 << GPIO_Pin);
 }

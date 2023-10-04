@@ -10,7 +10,7 @@
 // CNF:MODE
 #define In_Floating 0x04 // 0100
 #define In_PullDown 0x08 // 1000
-#define In_PullUp 0x08	 // 1000
+#define In_PullUp 0x18	 // 1000
 #define In_Analog 0x00	 // 0000
 // output in 2MHz max (mode 10)
 #define Out_Ppull 0x02	  // 0010
@@ -36,7 +36,7 @@
 // same thing but the structure does not exist, we pass the three arguments
 
 void MyGPIO_Init(GPIO_TypeDef *GPIO, char GPIO_Pin, char GPIO_Conf);
-int MyGPIO_Read(GPIO_TypeDef *GPIO, char GPIO_Pin); // 0 or not 0 (??!)
+int MyGPIO_Read(GPIO_TypeDef *GPIO, char GPIO_Pin);
 void MyGPIO_Set(GPIO_TypeDef *GPIO, char GPIO_Pin);
 void MyGPIO_Reset(GPIO_TypeDef *GPIO, char GPIO_Pin);
 void MyGPIO_Toggle(GPIO_TypeDef *GPIO, char GPIO_Pin);
