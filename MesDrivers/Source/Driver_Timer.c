@@ -7,5 +7,6 @@ void MyTimer_Base_Init(TIM_TypeDef * Timer, unsigned short ARR, unsigned short P
 
     Timer->ARR = ARR;
     Timer->PSC = PSC;
-    Timer->EGR |= TIM_EGR_UG;
+		MyTimer_Base_Start(Timer);
 }
+
