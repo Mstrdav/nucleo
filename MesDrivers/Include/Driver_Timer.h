@@ -4,7 +4,7 @@
 
 void MyTimer_Base_Init(TIM_TypeDef * Timer, unsigned short ARR, unsigned short PSC);
 
-#define MyTimer_Base_Start(Timer) (...)
-#define MyTimer_Base_Stop(Timer) (...)
+#define MyTimer_Base_Start(Timer) (Timer->CR1 |= TIM_CR1_CEN)
+#define MyTimer_Base_Stop(Timer) (Timer->CR1 &= ~TIM_CR1_CEN)
 
 #endif
