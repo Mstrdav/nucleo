@@ -388,20 +388,22 @@
               <FileType>1</FileType>
               <FilePath>.\Source\main.c</FilePath>
             </File>
-            <File>
-              <FileName>Driver_Timer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\MesDrivers\Source\Driver_Timer.c</FilePath>
-            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>MesDrivers</GroupName>
+          <Files>
             <File>
               <FileName>Driver_GPIO.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\MesDrivers\Source\Driver_GPIO.c</FilePath>
             </File>
+            <File>
+              <FileName>Driver_Timer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\MesDrivers\Source\Driver_Timer.c</FilePath>
+            </File>
           </Files>
-        </Group>
-        <Group>
-          <GroupName>MesDrivers</GroupName>
         </Group>
         <Group>
           <GroupName>::CMSIS</GroupName>
@@ -793,20 +795,22 @@
               <FileType>1</FileType>
               <FilePath>.\Source\main.c</FilePath>
             </File>
-            <File>
-              <FileName>Driver_Timer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\MesDrivers\Source\Driver_Timer.c</FilePath>
-            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>MesDrivers</GroupName>
+          <Files>
             <File>
               <FileName>Driver_GPIO.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\MesDrivers\Source\Driver_GPIO.c</FilePath>
             </File>
+            <File>
+              <FileName>Driver_Timer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\MesDrivers\Source\Driver_Timer.c</FilePath>
+            </File>
           </Files>
-        </Group>
-        <Group>
-          <GroupName>MesDrivers</GroupName>
         </Group>
         <Group>
           <GroupName>::CMSIS</GroupName>
