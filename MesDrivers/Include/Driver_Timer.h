@@ -8,6 +8,7 @@ void MyTimer_Base_Init(TIM_TypeDef * Timer, unsigned short ARR, unsigned short P
 #define MyTimer_Base_Stop(Timer) (Timer->CR1 &= ~TIM_CR1_CEN)
 
 void MyTimer_ActiveIT(TIM_TypeDef * Timer, char Prio, void *Handler);
-void MyTimerPWM(TIM_TypeDef * Timer, char Channel);
+void MyTimerModeToPWM(TIM_TypeDef * Timer, int Channel);
+void MyTimerSetPWMCycle(TIM_TypeDef * Timer, int Channel, int cycle);
 
 #endif

@@ -1,4 +1,5 @@
 #include "Driver_Timer.h"
+#include "math.h"
 //pointeur de fonction utilise pour importer code execute par handler
 void (*ptr1) (void);
 void (*ptr2) (void);
@@ -102,14 +103,14 @@ void TIM4_IRQHandler(void)
 	ptr4();
 }
 
-void MyTimerPWM(TIM_TypeDef * Timer, char Channel){
+void MyTimerModeToPWM(TIM_TypeDef * Timer, int Channel){
 	 if (Timer == TIM1)
     {
 			
     } else if (Timer == TIM2)		
     {
 			if (Channel == 1){
-				//output ,ode				
+				//output mode				
 				TIM2->CCMR1 &= ~TIM_CCMR1_CC1S;
 				//reset OC1M
 				TIM2->CCMR1 &= ~TIM_CCMR1_OC1M;
@@ -118,7 +119,7 @@ void MyTimerPWM(TIM_TypeDef * Timer, char Channel){
 				TIM2->CCER |= TIM_CCER_CC1E;
 				
 				//set default value of CCR1 to 0
-				TIM2->CCR1 = 0;
+				TIM2->CCR1 &= ~(0xf);
 			}
 			else if (Channel == 2){				
 				TIM2->CCMR1 &= ~TIM_CCMR1_CC2S;
@@ -150,8 +151,25 @@ void MyTimerPWM(TIM_TypeDef * Timer, char Channel){
     } else {
         return;
     }
+		
 	
 }
+
+void MyTimerSetPWMCycle(TIM_TypeDef * Timer, int Channel, int cycle){
+	//cycle is between 0 and 100
+	if(Channel == 1){
+		//les registres CCRX sont sur 16 bits soit 65 536 valeurs
+		//cycle = CCRX/ARR
+		//je veux importer la valeur de ARR
+		ARR = Timer->ARR;
+		Timer->CCR1 &= ~0xffff;
+		Timer->CCR1 |= cycle*ARR/100;
+		
+	}
+	//completer pour les autres channels
+}
+
+
 
 
 
